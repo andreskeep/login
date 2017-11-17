@@ -5,6 +5,10 @@ function scroll_to_class(element_class, removed_height) {
     }
 }
 
+jQuery.extend(jQuery.jtsage.datebox.prototype.options,
+    {
+      'useLang': 'es-ES'
+    });
 
 jQuery(document).ready(function() {
 
@@ -68,7 +72,7 @@ jQuery(document).ready(function() {
     var exp_number = /^[a-zA-Z0-9]{6,15}$/;
     var exp_acount = /^[0-9]{7,}$/;
     var exp_names =/^[a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ\s]+$/;
-    var exp_date = /^([0-9]{2}\/\-[0-9]{2}\/\-[0-9]{4})$/;
+    var exp_date = /^([0-9]{2}\/[0-9]{2}\/[0-9]{4})$/;
     var exp_address = /^[0-9a-zA-ZáéíóúàèìòùÀÈÌÒÙÁÉÍÓÚñÑüÜ#.\-_\s]+$/;
     var exp_phone = /^[0-9-()+]{3,20}$/;
     var exp_email = /^[a-zA-Z0-9\._-]+@[a-zA-Z0-9-]{2,}[.][a-zA-Z]{2,4}$/;
@@ -131,10 +135,290 @@ jQuery(document).ready(function() {
             'width': '50%'
         });
     }
+    $('#type_dni, #city, #sex').on('change', function() {
+        var valor = $(this).val();
+        $(this).parent().find('.alert-message').fadeOut();
+        $(this).next().find('.select2-selection--single').removeClass('input-error');
+     });
+
+    $('#bank, #type_acount_bank').on('change', function() {
+            if ($(this).attr('id') == 'bank') {
+
+                var bank = $(this).val();
+                var type_acount_bank = $("#type_acount_bank").val();
+                var acount = $("#acount").val();
+                console.log(bank);
+
+                if( bank != "") {
+
+                    if (acount.length == 0){
+                        $("#acount").addClass('input-error');
+                        $("#acount").parent().find('.alert-message').fadeIn();
+                    }else{
+                        $("#acount").removeClass('input-error');
+                        $("#acount").parent().find('.alert-message').fadeOut();
+                    }
+
+                    if (type_acount_bank.length == 0){
+                        $("#type_acount_bank").next().find('.select2-selection--single').addClass('input-error');
+                        $("#type_acount_bank").parent().find('.alert-message').fadeIn();
+                    }else{
+                        $("#type_acount_bank").next().find('.select2-selection--single').removeClass('input-error');
+                        $("#type_acount_bank").parent().find('.alert-message').fadeOut();
+                    }
+
+                }
+                else{
+                    $("#bank").next().find('.select2-selection--single').removeClass('input-error');
+                    $("#bank").parent().find('.alert-message').fadeOut();
+                    $("#type_acount_bank").next().find('.select2-selection--single').removeClass('input-error');  
+                    $("#type_acount_bank").parent().find('.alert-message').fadeOut();             
+                } 
+            }
+
+            if ($(this).attr('id') == 'type_acount_bank') {
+
+                var type_acount_bank = $(this).val();
+                var acount = $("#acount").val();
+                var bank =  $("#bank").val();
+                console.log(type_acount_bank);
+
+                if(type_acount_bank != "" ) {
+
+                    if (bank.length == 0){
+                        $("#bank").next().find('.select2-selection--single').addClass('input-error');
+                        $("#bank").parent().find('.alert-message').fadeIn();
+                    }else{
+                        $("#bank").next().find('.select2-selection--single').removeClass('input-error');
+                        $("#bank").parent().find('.alert-message').fadeOut();
+                    }
+
+                    if (acount.length == 0){
+                        $("#acount").next().find('.select2-selection--single').addClass('input-error');
+                        $("#acount").parent().find('.alert-message').fadeIn();
+                    }else{
+                        $("#acount").next().find('.select2-selection--single').removeClass('input-error');
+                        $("#acount").parent().find('.alert-message').fadeOut();
+                    }
+
+                }
+                else{
+                    $("#type_acount_bank").next().find('.select2-selection--single').removeClass('input-error');
+                    $("#type_acount_bank").parent().find('.alert-message').fadeOut();              
+                }
+            }
+     });
+
+    $('#acount').on('keyup', function() {
+            if ($(this).attr('id') == 'acount') {
+
+                var acount= $(this).val();
+                var bank = $("#bank").val();
+                var type_acount_bank = $("#type_acount_bank").val();
+
+
+                if (acount != "" || exp_acount.test(acount)) {
+
+                        if (bank.length == 0 || type_acount_bank.length == 0){
+
+                            //$("#bank").addClass('input-error');
+                            $("#bank").next().find('.select2-selection--single').addClass('input-error');
+                            $("#bank").parent().find('.alert-message').fadeIn();
+
+                            //$("#bank").addClass('input-error');
+                            $("#type_acount_bank").next().find('.select2-selection--single').addClass('input-error');
+                            $("#type_acount_bank").parent().find('.alert-message').fadeIn();
+
+                        }                     
+
+                } else {
+
+                        $(this).next().fadeOut();
+                        $(this).removeClass('input-error');
+                        //$(this).addClass('input-error');
+                }
+            }      
+     });
+
+    $('#first-name').on('keyup', function() {
+            if ($(this).attr('id') == 'first-name') {
+
+                var first_name = $(this).val();
+
+                if (exp_names.test(first_name) && first_name.length > 2) {
+
+                    $(this).removeClass('input-error');
+                    $(this).next().fadeOut();
+
+                }
+                else {
+
+                    $(this).addClass('input-error');
+                    $(this).next().fadeIn();
+                    next_step = false;
+                }
+            }        
+     });
+    
+    $('#last-name').on('keyup', function() {
+            if ($(this).attr('id') == 'last-name') {
+
+                var last_name = $(this).val();
+
+                if (exp_names.test(last_name) && last_name.length > 2 ) {
+
+                    $(this).removeClass('input-error');
+                    $(this).next().fadeOut();
+                }
+                else {
+
+                    $(this).addClass('input-error');
+                    $(this).next().fadeIn();
+                    next_step = false;
+                }
+            }       
+     });
+    
+    $('#dni').on('keyup', function() {
+            if ($(this).attr('id') == 'dni') {
+
+                var number = $(this).val();
+
+                if (exp_number.test(number)) {
+
+                    //$(this).removeClass('input-error');
+                    $(this).removeClass('input-error');
+                    $(this).next().fadeOut();
+                }
+                else {
+                    //$(this).addClass('input-error');
+                    $(this).addClass('input-error');
+                    $(this).next().fadeIn();
+                    next_step = false;
+                }
+            }      
+     });
+    
+    $('#address').on('keyup', function() {
+            if ($(this).attr('id') == 'address') {
+
+                var address = $(this).val();
+
+                if (exp_address.test(address) && address.length > 5 ) {
+
+                    $(this).removeClass('input-error');
+                    $(this).next().fadeOut();
+                }
+                else {
+
+                    $(this).addClass('input-error');
+                    $(this).next().fadeIn();
+                    next_step = false;
+                }
+            }       
+     });
+    
+    $('#phone').on('keyup', function() {
+            if ($(this).attr('id') == 'phone') {
+
+                var phone = $(this).val();
+
+                if (exp_phone.test(phone) && (phone.length == 7 || phone.length == 10 || phone.length == 13)) {
+
+                    $(this).removeClass('input-error');
+                    $(this).next().fadeOut();
+                }
+                else {
+
+                    $(this).addClass('input-error');
+                    $(this).next().fadeIn();
+                    next_step = false;
+                }
+            }      
+     });
+    
+    $('#code').on('keyup', function() {    
+             if ($(this).attr('id') == 'code') {
+
+                var code = $(this).val();
+
+                if (exp_number.test(code)) {
+
+                    $(this).removeClass('input-error');
+                    $(this).next().fadeOut();
+                }
+                else {
+
+                    $(this).addClass('input-error');
+                    $(this).next().fadeIn();
+                    next_step = false;
+                }
+            }    
+    });
+    
+    $('#email').on('keyup', function() {  
+            if ($(this).attr('id') == 'email') {
+
+                var email = $(this).val();
+
+                if (exp_email.test(email) && email.length > 0) {
+
+                    $(this).removeClass('input-error');
+                    $(this).next().fadeOut();
+                }
+                else {
+
+                    $(this).addClass('input-error');
+                    $(this).next().fadeIn();
+                    next_step = false;
+                }
+            }       
+    });
+    
+    $('#password').on('keyup', function() {
+            if ($(this).attr('id') == 'password') {
+
+                var password = $(this).val();
+
+                if (password.length > 5) {
+
+                    $(this).removeClass('input-error');
+                    $(this).next().fadeOut();
+                }
+                else {
+
+                    $(this).addClass('input-error');
+                    $(this).next().fadeIn();
+                    next_step = false;
+                }
+            }
+    });
+    
+    $('#password_confirmation').on('keyup', function(e) {
+            if ($(this).attr('id') == 'password_confirmation') {
+
+                var password_confirmation = $(this).val();
+                var password = $("#password").val();
+
+                if (password_confirmation.length > 5 && password_confirmation == password) {
+
+                    $(this).removeClass('input-error');+
+                    $(this).next().fadeOut();
+
+                }
+                else {
+
+                    $(this).addClass('input-error');
+                    $(this).next().fadeIn();
+                }
+            }
+    });
 
     $('#type_client').on('change', function() {
 
         var valor = $(this).val();
+        $(this).parent().find('.alert-message').fadeOut();
+        $(this).next().find('.select2-selection--single').removeClass('input-error');
 
         if (valor != 1) {
 
@@ -247,12 +531,14 @@ jQuery(document).ready(function() {
                     //$(this).addClass('input-error');
                     $(this).parent().find('.alert-message').fadeIn();
                     $(this).next().find('.select2-selection--single').addClass('input-error');
+
                     next_step = false;
 
                 }
                 else {
                     $(this).parent().find('.alert-message').fadeOut();
                     $(this).next().find('.select2-selection--single').removeClass('input-error');
+                    $(this).blur();
                     //$(this).removeClass('input-error');
                 }
             }
@@ -364,12 +650,11 @@ jQuery(document).ready(function() {
                 }
             }
 
-            /*if ($(this).attr('id') == 'birthday') {
-
+            if ($(this).attr('id') == 'birthday') {
                 var date = $(this).val();
-                console.log(date);
                 if (exp_date.test(date) && date.length == 10  ) {
 
+               
                     $(this).removeClass('input-error');
 
                 }
@@ -378,7 +663,7 @@ jQuery(document).ready(function() {
                     $(this).addClass('input-error');
                     next_step = false;
                 }
-            }*/
+            }
 
             if ($(this).attr('id') == 'address') {
 

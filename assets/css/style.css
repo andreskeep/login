@@ -57,6 +57,16 @@ h4.dinos{
     padding-left: 14px;
 }
 
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: 4px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__clear {
+    font-size: 1.8em;
+    color: #ff8a0d;
+    top: -3px;
+}
+
 
 
 img { max-width: 100%; }
