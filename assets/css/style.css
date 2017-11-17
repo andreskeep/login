@@ -5,7 +5,6 @@ body {
     font-size: 16px;
     font-weight: 300;
     color: #888;
-    line-height: 30px;
     text-align: center;
 }
 
@@ -148,7 +147,7 @@ ul.navbar-nav {
 
 .f1-buttons { text-align: right; }
 
-.f1 .input-error { border-color: #f35b3f; }
+.f1 .input-error { border-color: #f35b3f !important; transition: .8s ease-in-out}
 
 
 .select2-container--default .select2-selection--single {
@@ -164,6 +163,29 @@ ul.navbar-nav {
     max-height: 34px;
 }
 
+
+p.alert-message {
+    color: #afafaf;
+    font-size: 0.6em;
+    line-height: 12px;
+    display: none;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    height: auto;
+    margin-bottom: 0 !important;
+}
+
+p.alert-message.error{
+
+}
+
+.alert-danger {
+    color: #ffffff;
+    background-color: rgba(255, 0, 0, 0.2);
+    border: none;
+    border-radius: 20px;
+}
 
 /***** Media queries *****/
 
