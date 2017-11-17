@@ -11,37 +11,37 @@ jQuery(document).ready(function() {
     $("#type_client").select2({
         width: '100%',
         allowClear: true,
-        placeholder: 'Selccionar tipo cliente'
+        placeholder: 'Seleccionar tipo cliente'
     });
 
     $("#type_dni").select2({
         width: '100%',
         allowClear: true,
-        placeholder: 'Selccionar tipo documento'
+        placeholder: 'Seleccionar tipo documento'
     });
 
     $("#city").select2({
         width: '100%',
         allowClear: true,
-        placeholder: 'Selccionar ciudad'
+        placeholder: 'Seleccionar ciudad'
     });
 
     $("#sex").select2({
         width: '100%',
         allowClear: true,
-        placeholder: 'Selccionar sexo'
+        placeholder: 'Seleccionar sexo'
     });
 
     $("#bank").select2({
         width: '100%',
         allowClear: true,
-        placeholder: 'Selccionar banco'
+        placeholder: 'Seleccionar banco'
     });
 
     $("#type_acount_bank").select2({
         width: '100%',
         allowClear: true,
-        placeholder: 'Selccionar tipo cuenta'
+        placeholder: 'Seleccionar tipo cuenta'
     });
     
     /*
